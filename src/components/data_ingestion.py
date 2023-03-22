@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
 from src.components.data_transformation import DataTransformation
-
+from src.components.model_trainer import ModelTrainer
 @dataclass
 class dataIngestionConfig():
     train_data_path : str = os.path.join('Entire_data','train_data.csv')
@@ -40,10 +40,15 @@ class dataIngestion:
             
 
 if __name__ == "__main__" :
+    
     data = dataIngestion()
     train_data_path,test_data_path = data.initiate_data_ingestion()
     
     data_transformation=DataTransformation()
     train_arr, test_arr, _ =data_transformation.initiate_data_transformer(train_data_path,test_data_path)
+    
+    model = ModelTrainer()
+    print(f"the r2_score of the model = {model.initiate_model_trainer(train_arr, test_arr)}")
+    
     
     
